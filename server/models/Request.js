@@ -13,7 +13,7 @@ const requestSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['Requested', 'Claimed', 'Completed'],
+    enum: ['Requested', 'Claimed', 'Approved', 'Rejected', 'Completed'],
     default: 'Requested'
   }
 }, { timestamps: true });
