@@ -1,14 +1,24 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 export default function Register() {
+  const [searchParams] = useSearchParams();
+  const initialRole = searchParams.get("role") === "ngo" ? "ngo" : "restaurant";
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState("restaurant");
+  const [role, setRole] = useState(initialRole);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const r = searchParams.get("role");
+    if (r === "ngo" || r === "restaurant") {
+      setRole(r);
+    }
+  }, [searchParams]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,6 +41,14 @@ export default function Register() {
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center bg-surface overflow-hidden px-4 py-12">
+      {/* Back Button */}
+      <Link
+        to="/login"
+        className="absolute top-6 left-6 md:top-8 md:left-8 z-30 inline-flex items-center gap-2 px-3 py-2 bg-surface-container-low/50 border border-surface-variant/60 rounded-lg text-label-md font-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high hover:border-secondary/30 transition-all duration-200 backdrop-blur-md scale-[0.98] active:scale-95"
+      >
+        <span className="material-symbols-outlined text-sm">arrow_back</span>
+        <span>Back</span>
+      </Link>
       {/* Ambient soft organic background glows */}
       <div className="absolute -top-32 -left-20 w-[500px] h-[500px] bg-secondary-fixed/20 rounded-full blur-[140px] pointer-events-none z-0"></div>
       <div className="absolute top-1/2 -right-24 w-[480px] h-[480px] bg-primary-fixed/20 rounded-full blur-[140px] pointer-events-none z-0"></div>

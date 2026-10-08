@@ -85,14 +85,14 @@ export default function Navbar() {
               </div>
               <Link
                 className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-body-sm font-body-sm text-on-surface hover:bg-surface-container-low transition-colors"
-                to="/register"
+                to="/register?role=restaurant"
               >
                 <span className="w-2 h-2 rounded-full bg-secondary-container"></span>
                 <span>Join as Restaurant</span>
               </Link>
               <Link
                 className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-body-sm font-body-sm text-on-surface hover:bg-surface-container-low transition-colors"
-                to="/register"
+                to="/register?role=ngo"
               >
                 <span className="w-2 h-2 rounded-full bg-primary-container"></span>
                 <span>Join as Verified NGO</span>
