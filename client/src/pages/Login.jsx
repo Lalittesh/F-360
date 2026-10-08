@@ -28,8 +28,14 @@ export default function Login() {
       } else {
         localStorage.setItem("foodsphere_token", data.token);
         localStorage.setItem("foodsphere_role", data.role);
-        // Redirect to a placeholder dashboard (route we will create)
-        navigate("/dashboard");
+        if (data.name) localStorage.setItem("foodsphere_name", data.name);
+        if (data.email) localStorage.setItem("foodsphere_email", data.email);
+        
+        if (data.role === 'restaurant') {
+          navigate("/restaurant");
+        } else {
+          navigate("/dashboard");
+        }
       }
     } catch (err) {
       setError("Server error. Please try again later.");
