@@ -75,8 +75,7 @@
 
 ### 🔄 Food Donation Flow
 
-<img width="1086" height="716" alt="image" src="https://github.com/user-attachments/assets/d29b16a1-4cbf-4d4f-ac30-454b0d600d54" />
-
+![Uploading Gemini_Generated_Image_bkd20bkd20bkd20b.png…]()
 
 ---
 
