@@ -7,7 +7,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
@@ -16,9 +16,24 @@ export default function Login() {
       return;
     }
 
-    // Mock submission behavior
-    console.log("Mock Login:", { email, password });
-    navigate("/"); // Navigate to mock dashboard/home
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setError(data.message || "Login failed");
+      } else {
+        localStorage.setItem("foodsphere_token", data.token);
+        localStorage.setItem("foodsphere_role", data.role);
+        // Redirect to a placeholder dashboard (route we will create)
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      setError("Server error. Please try again later.");
+    }
   };
 
   return (

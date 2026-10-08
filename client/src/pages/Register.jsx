@@ -20,7 +20,7 @@ export default function Register() {
     }
   }, [searchParams]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
@@ -34,9 +34,22 @@ export default function Register() {
       return;
     }
 
-    // Mock submission behavior
-    console.log("Mock Register:", { name, email, password, role });
-    navigate("/"); // Navigate to mock dashboard/home
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, role }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setError(data.message || "Registration failed");
+      } else {
+        // Success
+        navigate("/login");
+      }
+    } catch (err) {
+      setError("Server error. Please try again later.");
+    }
   };
 
   return (
