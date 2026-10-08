@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function CTA() {
   return (
     <section
@@ -28,24 +30,24 @@ export default function CTA() {
           </p>
           {/* Dual CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
+            <Link
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-primary-container text-on-primary rounded-lg text-label-lg font-label-lg tracking-wide hover:bg-primary transition-all duration-200 shadow-md jewel-sapphire-glow"
-              href="#join-restaurant"
+              to="/register"
             >
               <span className="material-symbols-outlined text-lg" data-icon="restaurant">
                 restaurant
               </span>
               <span>Join as Restaurant</span>
-            </a>
-            <a
+            </Link>
+            <Link
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-surface text-secondary border border-secondary/40 rounded-lg text-label-lg font-label-lg tracking-wide hover:bg-surface-container-low transition-all duration-200 jewel-gold-glow"
-              href="#join-ngo"
+              to="/register"
             >
               <span className="material-symbols-outlined text-lg" data-icon="diversity_1">
                 diversity_1
               </span>
               <span>Join as NGO</span>
-            </a>
+            </Link>
           </div>
           <p className="text-label-sm font-label-sm text-outline uppercase tracking-widest mt-8">
             Strict Food Safety • End-to-End Cold Chain • Fully Tax-Deductible

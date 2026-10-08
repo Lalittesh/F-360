@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Hero() {
   return (
     <section className="relative py-16 md:py-24 overflow-hidden bg-surface" id="home">
@@ -53,24 +55,24 @@ export default function Hero() {
             </p>
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto mb-8">
-              <a
+              <Link
                 className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-primary-container text-on-primary rounded-lg text-label-lg font-label-lg tracking-wide hover:bg-primary transition-all duration-200 shadow-md jewel-sapphire-glow active:scale-95"
-                href="#donate"
+                to="/register"
               >
                 <span className="material-symbols-outlined text-lg" data-icon="volunteer_activism">
                   volunteer_activism
                 </span>
                 <span>Donate Food</span>
-              </a>
-              <a
+              </Link>
+              <Link
                 className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-surface-bright text-secondary border border-secondary/40 rounded-lg text-label-lg font-label-lg tracking-wide hover:bg-surface-container-low transition-all duration-200 jewel-gold-glow active:scale-95"
-                href="#ngo-access"
+                to="/register"
               >
                 <span className="material-symbols-outlined text-lg text-secondary" data-icon="diversity_1">
                   diversity_1
                 </span>
                 <span>Join as NGO</span>
-              </a>
+              </Link>
             </div>
             {/* Trust Micro-Feature / Endorsement */}
             <div className="flex items-center gap-3 pt-2 text-label-md font-label-md text-on-surface-variant">

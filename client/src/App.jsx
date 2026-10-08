@@ -1,20 +1,17 @@
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import FoodCarousel from "./components/FoodCarousel";
-import Reviews from "./components/Reviews";
-import CTA from "./components/CTA";
-import Footer from "./components/Footer";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <Hero />
-      <FoodCarousel />
-      <Reviews />
-      <CTA />
-      <Footer />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
