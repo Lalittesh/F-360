@@ -19,7 +19,7 @@ const RestaurantDashboard = () => {
           <p className="text-body-lg font-body-lg text-on-surface-variant">Together, surplus food becomes someone's next meal.</p>
         </div>
         
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-end gap-4">
           <Link to="/restaurant/profile" className="shrink-0" title="View Profile">
             <img 
               src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=150&h=150&fit=crop" 
