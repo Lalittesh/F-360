@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>FoodSphere 360 | Cultivating Dignity Through Culinary Surplus</title>
+    <!-- Typography: Newsreader (Editorial Serif) & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;700&family=Quicksand:wght@400;500;700&family=Archivo+Narrow:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Material Symbols Outlined -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Tailwind CSS v3 -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-variant": "#dee5d7",
+              "secondary-fixed": "#c1efaf",
+              "on-tertiary-fixed": "#3d0024",
+              "surface-container-highest": "#dee5d7",
+              "on-tertiary-container": "#ffecf1",
+              "on-error-container": "#93000a",
+              error: "#ba1a1a",
+              "on-secondary-fixed": "#012200",
+              "inverse-primary": "#7add63",
+              "tertiary-fixed": "#ffd8e6",
+              outline: "#6f7a69",
+              "on-secondary-container": "#476e3b",
+              "on-secondary-fixed-variant": "#294f20",
+              "secondary-container": "#c1efaf",
+              "on-background": "#171d15",
+              "surface-bright": "#f5fbed",
+              "primary-container": "#197f0a",
+              "secondary-fixed-dim": "#a6d395",
+              "surface-container-high": "#e4eadc",
+              secondary: "#416836",
+              "on-primary": "#ffffff",
+              "surface-container-low": "#f0f6e8",
+              "on-surface-variant": "#3f4a3a",
+              "surface-dim": "#d6dcce",
+              "outline-variant": "#bfcab6",
+              "on-primary-container": "#ccffb8",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed-variant": "#065300",
+              primary: "#096400",
+              surface: "#f5fbed",
+              background: "#f5fbed",
+              "tertiary-container": "#bc3b7f",
+              "primary-fixed": "#95fa7c",
+              "on-tertiary": "#ffffff",
+              "error-container": "#ffdad6",
+              "on-primary-fixed": "#012200",
+              tertiary: "#9c2066",
+              "primary-fixed-dim": "#7add63",
+              "surface-container-lowest": "#ffffff",
+              "inverse-on-surface": "#edf3e5",
+              "surface-container": "#eaf0e2",
+              "inverse-surface": "#2c3229",
+              "tertiary-fixed-dim": "#ffb0d0",
+              "on-surface": "#171d15",
+              "on-tertiary-fixed-variant": "#890a57",
+              "on-error": "#ffffff",
+              "surface-tint": "#0b6e00",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              margin: "3rem",
+              "margin-mobile": "1.25rem",
+              "space-sm": "0.5rem",
+              "gutter-mobile": "1rem",
+              "space-xl": "3rem",
+              "space-xs": "0.25rem",
+              gutter: "1.5rem",
+              "space-md": "1rem",
+              "space-lg": "1.75rem",
+            },
+            fontFamily: {
+              "headline-lg-mobile": ["Newsreader", "serif"],
+              "body-sm": ["Plus Jakarta Sans", "sans-serif"],
+              "label-md": ["Plus Jakarta Sans", "sans-serif"],
+              "display-lg-mobile": ["Newsreader", "serif"],
+              "headline-sm": ["Newsreader", "serif"],
+              "headline-lg": ["Newsreader", "serif"],
+              "body-lg": ["Plus Jakarta Sans", "sans-serif"],
+              "label-sm": ["Plus Jakarta Sans", "sans-serif"],
+              "display-lg": ["Newsreader", "serif"],
+              "body-md": ["Plus Jakarta Sans", "sans-serif"],
+              "label-lg": ["Plus Jakarta Sans", "sans-serif"],
+              "headline-md": ["Newsreader", "serif"],
+              headline: ["Bodoni Moda"],
+              display: ["Bodoni Moda"],
+              body: ["Quicksand"],
+              label: ["Archivo Narrow"],
+            },
+            fontSize: {
+              "headline-lg-mobile": ["28px", { lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "400" }],
+              "body-sm": ["13px", { lineHeight: "20px", fontWeight: "400" }],
+              "label-md": ["11px", { lineHeight: "16px", letterSpacing: "0.08em", fontWeight: "600" }],
+              "display-lg-mobile": ["38px", { lineHeight: "44px", letterSpacing: "-0.015em", fontWeight: "400" }],
+              "headline-sm": ["22px", { lineHeight: "30px", fontWeight: "500" }],
+              "headline-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.01em", fontWeight: "400" }],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "label-sm": ["10px", { lineHeight: "14px", letterSpacing: "0.1em", fontWeight: "700" }],
+              "display-lg": ["56px", { lineHeight: "64px", letterSpacing: "-0.02em", fontWeight: "400" }],
+              "body-md": ["15px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-lg": ["13px", { lineHeight: "18px", letterSpacing: "0.06em", fontWeight: "600" }],
+              "headline-md": ["28px", { lineHeight: "36px", letterSpacing: "-0.005em", fontWeight: "500" }],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-surface text-on-surface antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed min-h-screen flex flex-col font-body-md">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
