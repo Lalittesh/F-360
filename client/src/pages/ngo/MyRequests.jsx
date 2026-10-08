@@ -4,6 +4,7 @@ const MyRequests = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     const fetchMyRequests = async () => {
@@ -137,7 +138,7 @@ const MyRequests = () => {
                             Mark as Received
                           </button>
                         ) : (
-                          <button className="px-4 py-2 rounded-lg text-label-sm font-label-sm bg-surface-container border border-surface-variant/60 hover:bg-surface-container-high transition-colors text-on-surface font-medium">View</button>
+                          <button onClick={() => setSelectedItem(req)} className="px-4 py-2 rounded-lg text-label-sm font-label-sm bg-surface-container border border-surface-variant/60 hover:bg-surface-container-high transition-colors text-on-surface font-medium">View</button>
                         )}
                       </td>
                     </tr>
@@ -176,7 +177,7 @@ const MyRequests = () => {
                       Mark as Received
                     </button>
                   ) : (
-                    <button className="w-full py-3 rounded-xl text-label-lg font-label-lg bg-surface-container-low border border-surface-variant/80 hover:bg-surface-container transition-colors text-on-surface">
+                    <button onClick={() => setSelectedItem(req)} className="w-full py-3 rounded-xl text-label-lg font-label-lg bg-surface-container-low border border-surface-variant/80 hover:bg-surface-container transition-colors text-on-surface">
                       View Details
                     </button>
                   )}
@@ -186,6 +187,28 @@ const MyRequests = () => {
           </>
         )}
       </div>
+
+      {selectedItem && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-surface-bright rounded-2xl md:rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-2xl relative">
+            <button onClick={() => setSelectedItem(null)} className="absolute top-4 right-4 p-2 text-on-surface-variant hover:text-on-surface rounded-full hover:bg-surface-container-low transition-colors">
+              <span className="material-symbols-outlined">close</span>
+            </button>
+            <h3 className="text-headline-sm text-on-surface mb-2">{selectedItem.donation?.foodName}</h3>
+            <div className="mb-6 flex gap-2">
+              {getStatusBadge(selectedItem.status)}
+            </div>
+            
+            <div className="space-y-4 text-body-md text-on-surface-variant">
+              <div><strong className="text-on-surface">Restaurant:</strong> {selectedItem.donation?.restaurant?.name || 'Unknown'}</div>
+              <div><strong className="text-on-surface">Quantity:</strong> {selectedItem.donation?.quantity}</div>
+              <div><strong className="text-on-surface">Description:</strong> {selectedItem.donation?.description || 'No description provided'}</div>
+              <div><strong className="text-on-surface">Pickup Address:</strong> {selectedItem.donation?.pickupAddress}</div>
+              <div><strong className="text-on-surface">Requested On:</strong> {new Date(selectedItem.createdAt).toLocaleString()}</div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

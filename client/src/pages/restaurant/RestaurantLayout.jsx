@@ -69,7 +69,16 @@ const RestaurantLayout = () => {
           })}
           
           <div className="mt-auto mb-6 px-0 md:block">
-            <Link to="/login" className="flex items-center gap-3 px-4 py-3 rounded-xl text-error hover:bg-error-container/20 transition-all duration-200">
+            <Link 
+              to="/login" 
+              onClick={() => {
+                localStorage.removeItem('foodsphere_token');
+                localStorage.removeItem('foodsphere_role');
+                localStorage.removeItem('foodsphere_name');
+                localStorage.removeItem('foodsphere_restaurant_name');
+              }}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-error hover:bg-error-container/20 transition-all duration-200"
+            >
               <span className="material-symbols-outlined text-xl">logout</span>
               <span className="text-label-lg font-label-lg">Logout</span>
             </Link>

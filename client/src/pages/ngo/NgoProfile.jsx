@@ -15,6 +15,14 @@ const NgoProfile = () => {
   });
 
   const [formData, setFormData] = useState({ ...profile });
+  const [localPhotoUrl, setLocalPhotoUrl] = useState(null);
+
+  const handlePhotoChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setLocalPhotoUrl(URL.createObjectURL(file));
+    }
+  };
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -120,15 +128,16 @@ const NgoProfile = () => {
         <div className="relative z-10 flex items-center md:items-start gap-6 md:gap-8 flex-col md:flex-row">
           <div className="w-24 h-24 md:w-32 md:h-32 shrink-0 rounded-[20px] md:rounded-[24px] bg-surface-container border border-surface-variant/60 overflow-hidden shadow-inner group relative">
              <img 
-               src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=300&h=300&fit=crop" 
+               src={localPhotoUrl || "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=300&h=300&fit=crop"} 
                alt="NGO Logo" 
                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
              />
              {isEditing && (
-               <div className="absolute inset-0 bg-on-surface/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+               <label className="absolute inset-0 bg-on-surface/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                  <span className="material-symbols-outlined text-surface">photo_camera</span>
                  <span className="text-label-sm text-surface font-medium mt-1">Change</span>
-               </div>
+                 <input type="file" accept="image/*" onChange={handlePhotoChange} className="hidden" />
+               </label>
              )}
           </div>
 
