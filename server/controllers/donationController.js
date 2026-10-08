@@ -53,4 +53,18 @@ const getStats = async (req, res) => {
   }
 };
 
-module.exports = { createDonation, getMyDonations, getStats };
+// @desc Get available donations for NGOs
+// @route GET /api/donations/available
+// @access Private
+const getAvailableDonations = async (req, res) => {
+  try {
+    const donations = await Donation.find({ status: 'Available' })
+      .populate('restaurant', 'name address')
+      .sort({ createdAt: -1 });
+    res.json(donations);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+module.exports = { createDonation, getMyDonations, getStats, getAvailableDonations };

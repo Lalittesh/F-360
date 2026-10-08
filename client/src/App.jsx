@@ -4,12 +4,18 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 
-// Restaurant Dashboard Pages
 import RestaurantLayout from "./pages/restaurant/RestaurantLayout";
 import RestaurantDashboard from "./pages/restaurant/RestaurantDashboard";
 import DonateFood from "./pages/restaurant/DonateFood";
 import MyDonations from "./pages/restaurant/MyDonations";
 import RestaurantProfile from "./pages/restaurant/RestaurantProfile";
+
+// NGO Dashboard Pages
+import NgoLayout from "./pages/ngo/NgoLayout";
+import NgoDashboard from "./pages/ngo/NgoDashboard";
+import AvailableFood from "./pages/ngo/AvailableFood";
+import MyRequests from "./pages/ngo/MyRequests";
+import NgoProfile from "./pages/ngo/NgoProfile";
 
 function App() {
   return (
@@ -26,6 +32,14 @@ function App() {
           <Route path="donate" element={<DonateFood />} />
           <Route path="donations" element={<MyDonations />} />
           <Route path="profile" element={<RestaurantProfile />} />
+        </Route>
+
+        {/* NGO Routes */}
+        <Route path="/ngo" element={<NgoLayout />}>
+          <Route index element={<NgoDashboard />} />
+          <Route path="available-food" element={<AvailableFood />} />
+          <Route path="requests" element={<MyRequests />} />
+          <Route path="profile" element={<NgoProfile />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -33,6 +33,8 @@ export default function Login() {
         
         if (data.role === 'restaurant') {
           navigate("/restaurant");
+        } else if (data.role === 'ngo') {
+          navigate("/ngo");
         } else {
           navigate("/dashboard");
         }
