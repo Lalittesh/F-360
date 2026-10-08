@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  contactPerson: {
+    type: String,
+    default: "",
+  },
   role: {
     type: String,
     enum: ['restaurant', 'ngo'],

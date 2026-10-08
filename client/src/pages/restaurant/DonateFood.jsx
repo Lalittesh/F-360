@@ -4,14 +4,50 @@ import { useNavigate } from 'react-router-dom';
 const DonateFood = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const [formData, setFormData] = useState({
+    foodName: '',
+    category: '',
+    quantity: '',
+    preparationDate: '',
+    expiryDate: '',
+    pickupAddress: localStorage.getItem("foodsphere_address") || '',
+    description: '',
+    image: ''
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
+    setError(null);
+    try {
+      const token = localStorage.getItem('foodsphere_token');
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/donations`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}` 
+        },
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+      
+      if (res.ok) {
+        navigate('/restaurant/donations');
+      } else {
+        setError(data.message || 'Failed to submit donation');
+      }
+    } catch (err) {
+      setError('Server error during submission');
+    } finally {
       setIsSubmitting(false);
-      navigate('/restaurant/donations');
-    }, 1000);
+    }
   };
 
   return (
@@ -21,8 +57,14 @@ const DonateFood = () => {
         <p className="text-body-lg font-body-lg text-on-surface-variant">Provide details about the surplus food you are donating.</p>
       </div>
 
+      {error && (
+        <div className="mb-6 px-4 py-3 rounded-xl bg-error-container/50 border border-error/20 flex items-start gap-3">
+          <span className="material-symbols-outlined text-error text-sm mt-0.5">error</span>
+          <p className="text-body-sm font-body-sm text-on-error-container">{error}</p>
+        </div>
+      )}
+
       <div className="bg-surface-bright border border-secondary/20 rounded-[32px] p-8 md:p-10 ambient-warm-card relative overflow-hidden pearl-glass">
-        {/* Subtle decorative elements inside card */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-secondary-fixed/10 rounded-full blur-[60px] pointer-events-none"></div>
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-10"
@@ -34,13 +76,13 @@ const DonateFood = () => {
         <form onSubmit={handleSubmit} className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
           <div className="md:col-span-2 space-y-2">
             <label className="block text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest ml-1">Food Name</label>
-            <input type="text" className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3.5 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50 transition-all placeholder:text-outline-variant" placeholder="e.g. Pasta Primavera" required />
+            <input type="text" name="foodName" value={formData.foodName} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3.5 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50 transition-all placeholder:text-outline-variant" placeholder="e.g. Pasta Primavera" required />
           </div>
 
           <div className="space-y-2">
             <label className="block text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest ml-1">Food Category</label>
             <div className="relative">
-              <select className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3.5 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50 transition-all appearance-none" required>
+              <select name="category" value={formData.category} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3.5 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50 transition-all appearance-none" required>
                 <option value="">Select a category</option>
                 <option value="Cooked Meals">Cooked Meals</option>
                 <option value="Rice & Grains">Rice & Grains</option>
@@ -55,37 +97,37 @@ const DonateFood = () => {
 
           <div className="space-y-2">
             <label className="block text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest ml-1">Quantity</label>
-            <input type="text" className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3.5 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50 transition-all placeholder:text-outline-variant" placeholder="e.g. 15 servings or 5 kg" required />
+            <input type="text" name="quantity" value={formData.quantity} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3.5 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50 transition-all placeholder:text-outline-variant" placeholder="e.g. 15 servings or 5 kg" required />
           </div>
 
           <div className="space-y-2">
             <label className="block text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest ml-1">Preparation Date & Time</label>
-            <input type="datetime-local" className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3.5 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50 transition-all" required />
+            <input type="datetime-local" name="preparationDate" value={formData.preparationDate} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3.5 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50 transition-all" required />
           </div>
 
           <div className="space-y-2">
             <label className="block text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest ml-1">Expiry / Best Before</label>
-            <input type="datetime-local" className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3.5 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50 transition-all" required />
+            <input type="datetime-local" name="expiryDate" value={formData.expiryDate} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3.5 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50 transition-all" required />
           </div>
 
           <div className="md:col-span-2 space-y-2">
             <label className="block text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest ml-1">Pickup Address</label>
             <div className="relative">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-sm">location_on</span>
-              <input type="text" className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3.5 pl-11 pr-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50 transition-all" defaultValue="123 Culinary Lane, Food District, City 1001" required />
+              <input type="text" name="pickupAddress" value={formData.pickupAddress} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3.5 pl-11 pr-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50 transition-all" required />
             </div>
           </div>
 
           <div className="md:col-span-2 space-y-2">
             <label className="block text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest ml-1">Description (Optional)</label>
-            <textarea className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3.5 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50 transition-all min-h-[120px] resize-y placeholder:text-outline-variant" placeholder="Any special instructions for pickup or storage..."></textarea>
+            <textarea name="description" value={formData.description} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3.5 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-secondary/50 focus:ring-1 focus:ring-secondary/50 transition-all min-h-[120px] resize-y placeholder:text-outline-variant" placeholder="Any special instructions for pickup or storage..."></textarea>
           </div>
 
           <div className="md:col-span-2 space-y-2">
-            <label className="block text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest ml-1">Food Image</label>
+            <label className="block text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest ml-1">Food Image (Optional)</label>
             <div className="border-2 border-dashed border-surface-variant/80 rounded-xl p-8 text-center bg-surface-container-low/50 hover:bg-surface-container-low transition-colors">
               <span className="material-symbols-outlined text-4xl text-outline mb-2">cloud_upload</span>
-              <p className="text-body-sm text-on-surface-variant mb-4">Drag and drop an image, or browse to upload</p>
+              <p className="text-body-sm text-on-surface-variant mb-4">Image upload is simulated in this phase</p>
               <input type="file" className="text-body-sm text-on-surface file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-secondary-container/50 file:text-secondary hover:file:bg-secondary-container/80 transition-all cursor-pointer" accept="image/*" />
             </div>
           </div>

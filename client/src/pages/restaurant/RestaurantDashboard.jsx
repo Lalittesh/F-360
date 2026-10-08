@@ -1,9 +1,76 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const RestaurantDashboard = () => {
-  // Retrieve the name from auth data or edited profile data
-  const restaurantName = localStorage.getItem("foodsphere_restaurant_name") || localStorage.getItem("foodsphere_name") || "The Grand Eatery";
+  const restaurantName = localStorage.getItem("foodsphere_restaurant_name") || localStorage.getItem("foodsphere_name") || "Partner";
+
+  const [stats, setStats] = useState({ total: 0, available: 0, claimed: 0 });
+  const [recent, setRecent] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const token = localStorage.getItem('foodsphere_token');
+        const headers = { Authorization: `Bearer ${token}` };
+
+        const [statsRes, recentRes] = await Promise.all([
+          fetch(`${import.meta.env.VITE_API_URL}/donations/stats`, { headers }),
+          fetch(`${import.meta.env.VITE_API_URL}/donations/my`, { headers })
+        ]);
+
+        if (statsRes.ok && recentRes.ok) {
+          const statsData = await statsRes.json();
+          const recentData = await recentRes.json();
+          
+          setStats(statsData);
+          setRecent(recentData.slice(0, 5)); // Just take top 5 for recent
+        }
+      } catch (err) {
+        console.error('Error fetching dashboard data', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDashboardData();
+  }, []);
+
+  const getStatusBadge = (status) => {
+    switch(status) {
+      case 'Available':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-tertiary-container/30 text-tertiary text-label-sm font-label-sm font-semibold border border-tertiary/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Available
+          </span>
+        );
+      case 'Requested':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/30 text-secondary text-label-sm font-label-sm font-semibold border border-secondary/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-secondary"></span> Requested
+          </span>
+        );
+      case 'Claimed':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-container/30 text-primary text-label-sm font-label-sm font-semibold border border-primary/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary"></span> Claimed
+          </span>
+        );
+      case 'Completed':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-variant/40 text-on-surface-variant text-label-sm font-label-sm font-semibold border border-surface-variant">
+            <span className="w-1.5 h-1.5 rounded-full bg-on-surface-variant"></span> Completed
+          </span>
+        );
+      case 'Expired':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-error-container/30 text-error text-label-sm font-label-sm font-semibold border border-error/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-error"></span> Expired
+          </span>
+        );
+      default:
+        return <span>{status}</span>;
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 md:space-y-10">
@@ -42,7 +109,9 @@ const RestaurantDashboard = () => {
           </div>
           <div className="relative z-10">
             <span className="block text-label-md font-label-md text-on-surface-variant uppercase tracking-widest mb-3">Total Donations</span>
-            <span className="block text-display-sm font-display-sm text-on-surface font-semibold">142</span>
+            <span className="block text-display-sm font-display-sm text-on-surface font-semibold">
+              {loading ? '...' : stats.total}
+            </span>
           </div>
         </div>
 
@@ -52,7 +121,9 @@ const RestaurantDashboard = () => {
           </div>
           <div className="relative z-10">
             <span className="block text-label-md font-label-md text-on-surface-variant uppercase tracking-widest mb-3">Available</span>
-            <span className="block text-display-sm font-display-sm text-tertiary font-semibold">3</span>
+            <span className="block text-display-sm font-display-sm text-tertiary font-semibold">
+              {loading ? '...' : stats.available}
+            </span>
           </div>
         </div>
 
@@ -62,7 +133,9 @@ const RestaurantDashboard = () => {
           </div>
           <div className="relative z-10">
             <span className="block text-label-md font-label-md text-on-surface-variant uppercase tracking-widest mb-3">Claimed</span>
-            <span className="block text-display-sm font-display-sm text-primary font-semibold">139</span>
+            <span className="block text-display-sm font-display-sm text-primary font-semibold">
+              {loading ? '...' : stats.claimed}
+            </span>
           </div>
         </div>
       </div>
@@ -72,60 +145,39 @@ const RestaurantDashboard = () => {
           <h3 className="text-title-lg font-title-lg text-on-surface font-medium">Recent Donations</h3>
           <Link to="/restaurant/donations" className="text-label-md font-label-md text-secondary hover:text-secondary-container transition-colors">View All</Link>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-surface-container-low/30">
-                <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium">Food Name</th>
-                <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium">Quantity</th>
-                <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium">Date</th>
-                <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-surface-variant/30">
-              <tr className="hover:bg-surface-container-low/20 transition-colors">
-                <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface font-medium">Pasta Primavera</td>
-                <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface-variant">15 servings</td>
-                <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface-variant">Oct 8, 2026</td>
-                <td className="px-6 md:px-8 py-5">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-tertiary-container/30 text-tertiary text-label-sm font-label-sm font-semibold border border-tertiary/20">
-                    <span className="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Available
-                  </span>
-                </td>
-              </tr>
-              <tr className="hover:bg-surface-container-low/20 transition-colors">
-                <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface font-medium">Assorted Sandwiches</td>
-                <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface-variant">20 pieces</td>
-                <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface-variant">Oct 7, 2026</td>
-                <td className="px-6 md:px-8 py-5">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/30 text-secondary text-label-sm font-label-sm font-semibold border border-secondary/20">
-                    <span className="w-1.5 h-1.5 rounded-full bg-secondary"></span> Requested
-                  </span>
-                </td>
-              </tr>
-              <tr className="hover:bg-surface-container-low/20 transition-colors">
-                <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface font-medium">Vegetable Soup</td>
-                <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface-variant">10 liters</td>
-                <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface-variant">Oct 6, 2026</td>
-                <td className="px-6 md:px-8 py-5">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-container/30 text-primary text-label-sm font-label-sm font-semibold border border-primary/20">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary"></span> Claimed
-                  </span>
-                </td>
-              </tr>
-              <tr className="hover:bg-surface-container-low/20 transition-colors">
-                <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface font-medium">Steamed Rice & Curry</td>
-                <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface-variant">30 servings</td>
-                <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface-variant">Oct 5, 2026</td>
-                <td className="px-6 md:px-8 py-5">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-variant/40 text-on-surface-variant text-label-sm font-label-sm font-semibold border border-surface-variant">
-                    <span className="w-1.5 h-1.5 rounded-full bg-on-surface-variant"></span> Completed
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        
+        {loading ? (
+           <div className="p-8 text-center text-on-surface-variant animate-pulse">Loading recent donations...</div>
+        ) : recent.length === 0 ? (
+           <div className="p-8 text-center text-on-surface-variant">No donations yet. Click "Donate Food" to start.</div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-surface-container-low/30">
+                  <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium">Food Name</th>
+                  <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium">Quantity</th>
+                  <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium">Date</th>
+                  <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-surface-variant/30">
+                {recent.map((item) => (
+                  <tr key={item._id} className="hover:bg-surface-container-low/20 transition-colors">
+                    <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface font-medium">{item.foodName}</td>
+                    <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface-variant">{item.quantity}</td>
+                    <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface-variant">
+                      {new Date(item.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </td>
+                    <td className="px-6 md:px-8 py-5">
+                      {getStatusBadge(item.status)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
