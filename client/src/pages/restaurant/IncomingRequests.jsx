@@ -1,48 +1,52 @@
 import React, { useState, useEffect } from 'react';
 
-const MyRequests = () => {
+const IncomingRequests = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchMyRequests = async () => {
-      try {
-        const token = localStorage.getItem('foodsphere_token');
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/requests/my`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        const data = await res.json();
-        
-        if (res.ok) {
-          setRequests(data);
-        } else {
-          setError(data.message || 'Failed to fetch requests');
-        }
-      } catch (err) {
-        setError('Server error while loading requests');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchMyRequests();
-  }, []);
-
-  const handleReceive = async (id) => {
+  const fetchRequests = async () => {
+    setLoading(true);
     try {
       const token = localStorage.getItem('foodsphere_token');
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/requests/${id}/receive`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/requests/restaurant`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+      
+      if (res.ok) {
+        setRequests(data);
+      } else {
+        setError(data.message || 'Failed to fetch incoming requests');
+      }
+    } catch (err) {
+      setError('Server error while loading requests');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRequests();
+  }, []);
+
+  const handleAction = async (id, action) => {
+    try {
+      const token = localStorage.getItem('foodsphere_token');
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/requests/${id}/${action}`, {
         method: 'PUT',
         headers: { Authorization: `Bearer ${token}` }
       });
+      
       if (res.ok) {
-        setRequests(prev => prev.map(req => req._id === id ? { ...req, status: 'Completed' } : req));
+        // Optimistically update or re-fetch
+        fetchRequests();
       } else {
         const data = await res.json();
-        alert(data.message || 'Failed to mark as received');
+        alert(data.message || `Failed to ${action} request`);
       }
     } catch (err) {
-      alert('Error updating request');
+      alert(`Error trying to ${action} request`);
     }
   };
 
@@ -50,24 +54,23 @@ const MyRequests = () => {
     switch(status) {
       case 'Requested':
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100/30 text-blue-600 text-label-sm font-label-sm font-semibold border border-blue-500/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span> Pending
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/30 text-secondary text-label-sm font-label-sm font-semibold border border-secondary/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span> Pending
           </span>
         );
       case 'Approved':
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100/30 text-amber-600 text-label-sm font-label-sm font-semibold border border-amber-500/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse"></span> Approved
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-container/30 text-primary text-label-sm font-label-sm font-semibold border border-primary/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary"></span> Approved
           </span>
         );
       case 'Rejected':
         return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-100/30 text-rose-600 text-label-sm font-label-sm font-semibold border border-rose-500/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-600"></span> Rejected
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-error-container/30 text-error text-label-sm font-label-sm font-semibold border border-error/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-error"></span> Rejected
           </span>
         );
       case 'Completed':
-      case 'Claimed':
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-variant/40 text-on-surface-variant text-label-sm font-label-sm font-semibold border border-surface-variant">
             <span className="w-1.5 h-1.5 rounded-full bg-on-surface-variant"></span> Completed
@@ -81,29 +84,29 @@ const MyRequests = () => {
   return (
     <div className="max-w-6xl mx-auto space-y-6 md:space-y-8">
       <div className="mb-6 md:mb-8 pb-4 md:pb-6 border-b border-surface-variant/30">
-        <h1 className="text-headline-sm md:text-headline-md font-headline-md text-on-surface tracking-tight mb-2">My Requests</h1>
-        <p className="text-body-md md:text-body-lg font-body-lg text-on-surface-variant">Track your requested food donations and their statuses.</p>
+        <h1 className="text-headline-sm md:text-headline-md font-headline-md text-on-surface tracking-tight mb-2">Incoming Requests</h1>
+        <p className="text-body-md md:text-body-lg font-body-lg text-on-surface-variant">Manage food requests from partner NGOs.</p>
       </div>
 
       {error && (
-        <div className="mb-6 px-4 py-3 rounded-xl bg-rose-100/50 border border-rose-500/20 flex items-start gap-3">
-          <span className="material-symbols-outlined text-rose-600 text-sm mt-0.5">error</span>
-          <p className="text-body-sm font-body-sm text-white-container">{error}</p>
+        <div className="mb-6 px-4 py-3 rounded-xl bg-error-container/50 border border-error/20 flex items-start gap-3">
+          <span className="material-symbols-outlined text-error text-sm mt-0.5">error</span>
+          <p className="text-body-sm font-body-sm text-on-error-container">{error}</p>
         </div>
       )}
 
       <div className="bg-surface-bright border border-surface-variant/40 rounded-[20px] md:rounded-[24px] overflow-hidden ambient-warm-card">
         <div className="px-5 md:px-8 py-4 md:py-5 border-b border-surface-variant/40 bg-surface-container-low/20">
           <div className="flex items-center gap-2 text-label-md text-on-surface-variant uppercase tracking-widest font-medium">
-             <span className="material-symbols-outlined text-[18px]">history</span>
-             Request Log
+             <span className="material-symbols-outlined text-[18px]">notifications</span>
+             Request Inbox
           </div>
         </div>
         
         {loading ? (
           <div className="p-8 md:p-10 text-center text-on-surface-variant animate-pulse">Loading requests...</div>
         ) : requests.length === 0 ? (
-          <div className="p-8 md:p-10 text-center text-on-surface-variant">You have not made any requests yet.</div>
+          <div className="p-8 md:p-10 text-center text-on-surface-variant">You have no incoming requests at the moment.</div>
         ) : (
           <>
             {/* Desktop Table */}
@@ -111,19 +114,19 @@ const MyRequests = () => {
               <table className="w-full text-left border-collapse min-w-[700px]">
                 <thead>
                   <tr className="bg-surface-container-low/30 border-b border-surface-variant/30">
-                    <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium">Food Name</th>
-                    <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium">Restaurant</th>
+                    <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium">NGO Name</th>
+                    <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium">Food Item</th>
                     <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium">Quantity</th>
                     <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium">Request Date</th>
                     <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium">Status</th>
-                    <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium text-right">Action</th>
+                    <th className="px-6 md:px-8 py-4 text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest font-medium text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-surface-variant/30">
                   {requests.map((req) => (
                     <tr key={req._id} className="hover:bg-surface-container-low/20 transition-colors">
-                      <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface font-medium">{req.donation?.foodName}</td>
-                      <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface-variant">{req.donation?.restaurant?.name || 'Unknown'}</td>
+                      <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface font-medium">{req.ngo?.name || 'Unknown NGO'}</td>
+                      <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface-variant">{req.donation?.foodName}</td>
                       <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface-variant">{req.donation?.quantity}</td>
                       <td className="px-6 md:px-8 py-5 text-body-md font-body-md text-on-surface-variant">
                         {new Date(req.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
@@ -132,12 +135,13 @@ const MyRequests = () => {
                         {getStatusBadge(req.status)}
                       </td>
                       <td className="px-6 md:px-8 py-5 text-right flex justify-end gap-2">
-                        {req.status === 'Approved' ? (
-                          <button onClick={() => handleReceive(req._id)} className="px-4 py-2 rounded-lg text-label-sm font-label-sm bg-amber-500 text-white hover:bg-amber-600 transition-colors font-medium">
-                            Mark as Received
-                          </button>
+                        {req.status === 'Requested' ? (
+                          <>
+                            <button onClick={() => handleAction(req._id, 'accept')} className="px-4 py-2 rounded-lg text-label-sm font-label-sm bg-primary-container text-on-primary hover:bg-primary transition-colors font-medium">Accept</button>
+                            <button onClick={() => handleAction(req._id, 'reject')} className="px-4 py-2 rounded-lg text-label-sm font-label-sm bg-transparent border border-error/50 text-error hover:bg-error-container/20 transition-colors font-medium">Reject</button>
+                          </>
                         ) : (
-                          <button className="px-4 py-2 rounded-lg text-label-sm font-label-sm bg-surface-container border border-surface-variant/60 hover:bg-surface-container-high transition-colors text-on-surface font-medium">View</button>
+                          <span className="text-label-sm text-on-surface-variant">No actions</span>
                         )}
                       </td>
                     </tr>
@@ -152,9 +156,9 @@ const MyRequests = () => {
                 <div key={req._id} className="bg-surface-bright border border-surface-variant/50 p-5 rounded-2xl shadow-sm flex flex-col gap-4">
                   <div className="flex justify-between items-start gap-4">
                     <div>
-                      <h4 className="text-title-md font-title-md text-on-surface leading-tight">{req.donation?.foodName}</h4>
+                      <h4 className="text-title-md font-title-md text-on-surface leading-tight">{req.ngo?.name || 'Unknown NGO'}</h4>
                       <p className="text-label-md text-on-surface-variant mt-1 flex items-center gap-1">
-                        <span className="material-symbols-outlined text-[16px]">restaurant</span> {req.donation?.restaurant?.name || 'Unknown'}
+                        <span className="material-symbols-outlined text-[16px]">restaurant_menu</span> {req.donation?.foodName}
                       </p>
                     </div>
                     <div className="shrink-0">{getStatusBadge(req.status)}</div>
@@ -171,14 +175,19 @@ const MyRequests = () => {
                     </div>
                   </div>
 
-                  {req.status === 'Approved' ? (
-                    <button onClick={() => handleReceive(req._id)} className="w-full py-3 rounded-xl text-label-lg font-label-lg bg-amber-500 text-white hover:bg-amber-600 transition-colors">
-                      Mark as Received
-                    </button>
+                  {req.status === 'Requested' ? (
+                    <div className="flex flex-col gap-2">
+                      <button onClick={() => handleAction(req._id, 'accept')} className="w-full py-3 rounded-xl text-label-lg font-label-lg bg-primary-container text-on-primary hover:bg-primary transition-colors">
+                        Accept Request
+                      </button>
+                      <button onClick={() => handleAction(req._id, 'reject')} className="w-full py-3 rounded-xl text-label-lg font-label-lg bg-transparent border border-error/50 text-error hover:bg-error-container/20 transition-colors">
+                        Reject
+                      </button>
+                    </div>
                   ) : (
-                    <button className="w-full py-3 rounded-xl text-label-lg font-label-lg bg-surface-container-low border border-surface-variant/80 hover:bg-surface-container transition-colors text-on-surface">
-                      View Details
-                    </button>
+                    <div className="text-center text-label-sm text-on-surface-variant py-2">
+                      No further actions available
+                    </div>
                   )}
                 </div>
               ))}
@@ -190,4 +199,4 @@ const MyRequests = () => {
   );
 };
 
-export default MyRequests;
+export default IncomingRequests;

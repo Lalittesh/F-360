@@ -40,16 +40,23 @@ const NgoDashboard = () => {
       case 'Requested':
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100/30 text-blue-600 text-label-sm font-label-sm font-semibold border border-blue-500/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span> Requested
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span> Pending
           </span>
         );
-      case 'Claimed':
+      case 'Approved':
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100/30 text-amber-600 text-label-sm font-label-sm font-semibold border border-amber-500/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-600"></span> Claimed
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse"></span> Approved
+          </span>
+        );
+      case 'Rejected':
+        return (
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-100/30 text-rose-600 text-label-sm font-label-sm font-semibold border border-rose-500/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-600"></span> Rejected
           </span>
         );
       case 'Completed':
+      case 'Claimed':
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-variant/40 text-on-surface-variant text-label-sm font-label-sm font-semibold border border-surface-variant">
             <span className="w-1.5 h-1.5 rounded-full bg-on-surface-variant"></span> Completed

@@ -9,6 +9,7 @@ import RestaurantDashboard from "./pages/restaurant/RestaurantDashboard";
 import DonateFood from "./pages/restaurant/DonateFood";
 import MyDonations from "./pages/restaurant/MyDonations";
 import RestaurantProfile from "./pages/restaurant/RestaurantProfile";
+import IncomingRequests from "./pages/restaurant/IncomingRequests";
 
 // NGO Dashboard Pages
 import NgoLayout from "./pages/ngo/NgoLayout";
@@ -30,6 +31,7 @@ function App() {
         <Route path="/restaurant" element={<RestaurantLayout />}>
           <Route index element={<RestaurantDashboard />} />
           <Route path="donate" element={<DonateFood />} />
+          <Route path="incoming-requests" element={<IncomingRequests />} />
           <Route path="donations" element={<MyDonations />} />
           <Route path="profile" element={<RestaurantProfile />} />
         </Route>

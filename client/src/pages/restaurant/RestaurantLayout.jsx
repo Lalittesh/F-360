@@ -4,9 +4,9 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 const RestaurantLayout = () => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   const navItems = [
     { name: 'Dashboard', path: '/restaurant', icon: 'dashboard' },
+    { name: 'Incoming Requests', path: '/restaurant/incoming-requests', icon: 'notifications_active' },
     { name: 'Donate Food', path: '/restaurant/donate', icon: 'volunteer_activism' },
     { name: 'My Donations', path: '/restaurant/donations', icon: 'list_alt' },
     { name: 'Profile', path: '/restaurant/profile', icon: 'restaurant' },
