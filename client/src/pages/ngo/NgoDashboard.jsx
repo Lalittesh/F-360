@@ -71,10 +71,13 @@ const NgoDashboard = () => {
     <div className="max-w-6xl mx-auto space-y-6 md:space-y-10">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-surface-variant/30">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-low border border-surface-variant/40 text-label-sm font-label-sm text-amber-600 uppercase tracking-widest mb-4 shadow-sm pearl-glass">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse jewel-gold-glow"></span>
-            NGO Dashboard
-          </div>
+          <Link to="/ngo/profile" className="shrink-0 order-1 md:order-none mb-4 inline-block" title="View Profile">
+            <img 
+              src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=150&h=150&fit=crop" 
+              alt="NGO Logo" 
+              className="w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-surface-variant/60 object-cover shadow-sm hover:scale-105 hover:border-amber-500/50 transition-all duration-200"
+            />
+          </Link>
           <h1 className="text-headline-sm md:text-headline-md font-headline-md text-on-surface tracking-tight mb-2">
             Welcome, {ngoName}
           </h1>
@@ -82,13 +85,6 @@ const NgoDashboard = () => {
         </div>
         
         <div className="flex items-center md:flex-col md:items-end gap-4 w-full md:w-auto justify-between md:justify-start">
-          <Link to="/ngo/profile" className="shrink-0 order-1 md:order-none" title="View Profile">
-            <img 
-              src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=150&h=150&fit=crop" 
-              alt="NGO Logo" 
-              className="w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-surface-variant/60 object-cover shadow-sm hover:scale-105 hover:border-amber-500/50 transition-all duration-200"
-            />
-          </Link>
           <Link to="/ngo/available-food" className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-amber-500 text-white rounded-xl text-label-lg font-label-lg tracking-wide hover:bg-amber-600 transition-all duration-200 shadow-md jewel-gold-glow active:scale-[0.98]">
             <span className="material-symbols-outlined text-[20px]">search</span>
             <span>Find Food</span>

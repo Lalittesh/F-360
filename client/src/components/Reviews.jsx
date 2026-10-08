@@ -19,7 +19,7 @@ export default function Reviews() {
             <div>
               {/* Star Rating & Score */}
               <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-1 text-secondary">
+                <div className="flex items-center gap-1 text-yellow-500">
                   <span className="material-symbols-outlined text-sm" data-icon="star" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
                   <span className="material-symbols-outlined text-sm" data-icon="star" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
                   <span className="material-symbols-outlined text-sm" data-icon="star" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
@@ -56,7 +56,7 @@ export default function Reviews() {
             <div>
               {/* Star Rating & Score */}
               <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-1 text-secondary">
+                <div className="flex items-center gap-1 text-yellow-500">
                   <span className="material-symbols-outlined text-sm" data-icon="star" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
                   <span className="material-symbols-outlined text-sm" data-icon="star" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
                   <span className="material-symbols-outlined text-sm" data-icon="star" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
@@ -93,7 +93,7 @@ export default function Reviews() {
             <div>
               {/* Star Rating & Score */}
               <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-1 text-secondary">
+                <div className="flex items-center gap-1 text-yellow-500">
                   <span className="material-symbols-outlined text-sm" data-icon="star" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
                   <span className="material-symbols-outlined text-sm" data-icon="star" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
                   <span className="material-symbols-outlined text-sm" data-icon="star" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>

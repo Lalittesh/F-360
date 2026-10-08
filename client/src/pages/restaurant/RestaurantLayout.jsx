@@ -23,7 +23,7 @@ const RestaurantLayout = () => {
           <div className="w-8 h-8 rounded-lg bg-surface-container-high border border-outline-variant/60 flex items-center justify-center text-secondary shadow-sm">
             <span className="material-symbols-outlined text-secondary text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>restaurant</span>
           </div>
-          <h2 className="text-title-md font-title-md tracking-tight font-semibold">FoodSphere</h2>
+          <h2 className="text-title-md font-title-md tracking-tight font-semibold">Restaurant</h2>
         </div>
         <button onClick={() => setIsMobileMenuOpen(true)} className="p-2 text-on-surface">
           <span className="material-symbols-outlined">menu</span>
@@ -42,7 +42,7 @@ const RestaurantLayout = () => {
             <div className="w-10 h-10 rounded-xl bg-surface-container-high border border-outline-variant/60 flex items-center justify-center text-secondary shadow-sm">
               <span className="material-symbols-outlined text-secondary text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>restaurant</span>
             </div>
-            <h2 className="text-title-lg font-title-lg tracking-tight font-semibold">FoodSphere</h2>
+            <h2 className="text-title-lg font-title-lg tracking-tight font-semibold">Restaurant</h2>
           </div>
           <button onClick={() => setIsMobileMenuOpen(false)} className="md:hidden p-1 text-on-surface-variant hover:text-on-surface">
             <span className="material-symbols-outlined">close</span>
