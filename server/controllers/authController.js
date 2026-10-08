@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Donation = require('../models/Donation');
 const jwt = require('jsonwebtoken');
 
 const generateToken = (userId, role) => {
@@ -34,6 +35,45 @@ const register = async (req, res) => {
       password,
       role
     });
+
+    if (user.role === 'restaurant') {
+      const now = new Date();
+      const expiry = new Date();
+      expiry.setDate(now.getDate() + 2);
+
+      await Donation.insertMany([
+        {
+          restaurant: user._id,
+          foodName: 'Vegetable Biryani',
+          category: 'Cooked Meals',
+          quantity: '20 servings',
+          preparationDate: now,
+          expiryDate: expiry,
+          pickupAddress: 'To be updated in profile',
+          status: 'Available'
+        },
+        {
+          restaurant: user._id,
+          foodName: 'Paneer Curry & Rice',
+          category: 'Cooked Meals',
+          quantity: '15 servings',
+          preparationDate: now,
+          expiryDate: expiry,
+          pickupAddress: 'To be updated in profile',
+          status: 'Available'
+        },
+        {
+          restaurant: user._id,
+          foodName: 'Idli & Sambar',
+          category: 'Cooked Meals',
+          quantity: '30 servings',
+          preparationDate: now,
+          expiryDate: expiry,
+          pickupAddress: 'To be updated in profile',
+          status: 'Available'
+        }
+      ]);
+    }
 
     if (user) {
       res.status(201).json({

@@ -51,10 +51,10 @@ const DonateFood = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="mb-10 pb-6 border-b border-surface-variant/30">
-        <h1 className="text-headline-md font-headline-md text-on-surface tracking-tight mb-2">Donate Food</h1>
-        <p className="text-body-lg font-body-lg text-on-surface-variant">Provide details about the surplus food you are donating.</p>
+    <div className="max-w-4xl mx-auto space-y-6 md:space-y-8">
+      <div className="mb-6 md:mb-10 pb-4 md:pb-6 border-b border-surface-variant/30">
+        <h1 className="text-headline-sm md:text-headline-md font-headline-md text-on-surface tracking-tight mb-2">Donate Food</h1>
+        <p className="text-body-md md:text-body-lg font-body-lg text-on-surface-variant">Provide details about the surplus food you are donating.</p>
       </div>
 
       {error && (
@@ -64,7 +64,7 @@ const DonateFood = () => {
         </div>
       )}
 
-      <div className="bg-surface-bright border border-secondary/20 rounded-[32px] p-8 md:p-10 ambient-warm-card relative overflow-hidden pearl-glass">
+      <div className="bg-surface-bright border border-secondary/20 rounded-[20px] md:rounded-[32px] p-6 md:p-10 ambient-warm-card relative overflow-hidden pearl-glass">
         <div className="absolute top-0 right-0 w-64 h-64 bg-secondary-fixed/10 rounded-full blur-[60px] pointer-events-none"></div>
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-10"

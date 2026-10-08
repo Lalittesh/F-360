@@ -97,28 +97,28 @@ const NgoProfile = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="mb-10 pb-6 border-b border-surface-variant/30">
-        <h1 className="text-headline-md font-headline-md text-on-surface tracking-tight mb-2">Organization Profile</h1>
-        <p className="text-body-lg font-body-lg text-on-surface-variant">Manage your NGO's details and contact information.</p>
+    <div className="max-w-4xl mx-auto space-y-6 md:space-y-8">
+      <div className="mb-6 md:mb-10 pb-4 md:pb-6 border-b border-surface-variant/30">
+        <h1 className="text-headline-sm md:text-headline-md font-headline-md text-on-surface tracking-tight mb-2">Organization Profile</h1>
+        <p className="text-body-md md:text-body-lg font-body-lg text-on-surface-variant">Manage your NGO's details and contact information.</p>
       </div>
 
       {error && (
-        <div className="mb-6 px-4 py-3 rounded-xl bg-error-container/50 border border-error/20 flex items-start gap-3">
-          <span className="material-symbols-outlined text-error text-sm mt-0.5">error</span>
-          <p className="text-body-sm font-body-sm text-on-error-container">{error}</p>
+        <div className="mb-6 px-4 py-3 rounded-xl bg-rose-100/50 border border-rose-500/20 flex items-start gap-3">
+          <span className="material-symbols-outlined text-rose-600 text-sm mt-0.5">error</span>
+          <p className="text-body-sm font-body-sm text-white-container">{error}</p>
         </div>
       )}
 
-      <div className="bg-surface-bright border border-surface-variant/40 rounded-[32px] p-8 md:p-12 ambient-warm-card relative overflow-hidden pearl-glass">
+      <div className="bg-surface-bright border border-surface-variant/40 rounded-[20px] md:rounded-[32px] p-6 md:p-12 ambient-warm-card relative overflow-hidden pearl-glass">
         {/* Subtle decorative elements inside card */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-primary-fixed/5 rounded-full blur-[80px] pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-600-fixed/5 rounded-full blur-[80px] pointer-events-none"></div>
         <svg className="absolute -top-10 -right-10 w-64 h-64 pointer-events-none opacity-20" xmlns="http://www.w3.org/2000/svg">
           <path d="M 10,100 C 50,20 150,0 200,80 C 250,160 100,200 50,150" fill="none" stroke="#2c5e50" strokeWidth="2" strokeDasharray="4,8"></path>
         </svg>
 
-        <div className="relative z-10 flex items-start gap-8 flex-col md:flex-row">
-          <div className="w-32 h-32 shrink-0 rounded-[24px] bg-surface-container border border-surface-variant/60 overflow-hidden shadow-inner group relative">
+        <div className="relative z-10 flex items-center md:items-start gap-6 md:gap-8 flex-col md:flex-row">
+          <div className="w-24 h-24 md:w-32 md:h-32 shrink-0 rounded-[20px] md:rounded-[24px] bg-surface-container border border-surface-variant/60 overflow-hidden shadow-inner group relative">
              <img 
                src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=300&h=300&fit=crop" 
                alt="NGO Logo" 
@@ -173,35 +173,35 @@ const NgoProfile = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8">
                 <div className="space-y-2">
                   <label className="block text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest">Organization Name</label>
-                  <input type="text" name="name" value={formData.name} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all" />
+                  <input type="text" name="name" value={formData.name} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-secondary/50 transition-all" />
                 </div>
                 
                 <div className="space-y-2">
                   <label className="block text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest">Contact Person</label>
-                  <input type="text" name="contactPerson" value={formData.contactPerson} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all" />
+                  <input type="text" name="contactPerson" value={formData.contactPerson} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-secondary/50 transition-all" />
                 </div>
 
                 <div className="space-y-2">
                   <label className="block text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest">Email Address</label>
-                  <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all" />
+                  <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-secondary/50 transition-all" />
                 </div>
 
                 <div className="space-y-2">
                   <label className="block text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest">Phone Number</label>
-                  <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all" />
+                  <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-secondary/50 transition-all" />
                 </div>
 
                 <div className="md:col-span-2 space-y-2">
                   <label className="block text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest">Address</label>
-                  <input type="text" name="address" value={formData.address} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all" />
+                  <input type="text" name="address" value={formData.address} onChange={handleInputChange} className="w-full bg-surface-container-low border border-surface-variant/80 rounded-xl py-3 px-4 text-body-md font-body-md text-on-surface focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-secondary/50 transition-all" />
                 </div>
               </div>
             )}
 
             <div className="mt-8 pt-8 border-t border-surface-variant/40 flex justify-end gap-4">
               {!isEditing ? (
-                <button onClick={() => setIsEditing(true)} className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-surface-container-low border border-surface-variant/80 text-on-surface rounded-xl text-label-lg font-label-lg tracking-wide hover:bg-surface-container hover:border-primary/30 transition-all duration-200 active:scale-[0.98]">
-                  <span className="material-symbols-outlined text-sm text-primary">edit</span>
+                <button onClick={() => setIsEditing(true)} className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-surface-container-low border border-surface-variant/80 text-on-surface rounded-xl text-label-lg font-label-lg tracking-wide hover:bg-surface-container hover:border-amber-500/30 transition-all duration-200 active:scale-[0.98]">
+                  <span className="material-symbols-outlined text-sm text-amber-600">edit</span>
                   <span>Edit Profile</span>
                 </button>
               ) : (
@@ -209,7 +209,7 @@ const NgoProfile = () => {
                   <button onClick={handleCancel} disabled={saving} className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-transparent border border-surface-variant/80 text-on-surface-variant rounded-xl text-label-lg font-label-lg tracking-wide hover:bg-surface-container hover:text-on-surface transition-all duration-200 disabled:opacity-50">
                     Cancel
                   </button>
-                  <button onClick={handleSave} disabled={saving} className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-primary-container text-on-primary rounded-xl text-label-lg font-label-lg tracking-wide hover:bg-primary transition-all duration-200 shadow-md jewel-sapphire-glow active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed">
+                  <button onClick={handleSave} disabled={saving} className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-amber-500 text-white rounded-xl text-label-lg font-label-lg tracking-wide hover:bg-amber-600 transition-all duration-200 shadow-md jewel-gold-glow active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed">
                     {saving ? 'Saving...' : (
                       <>
                         <span className="material-symbols-outlined text-sm">save</span>

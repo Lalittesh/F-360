@@ -97,10 +97,10 @@ const RestaurantProfile = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="mb-10 pb-6 border-b border-surface-variant/30">
-        <h1 className="text-headline-md font-headline-md text-on-surface tracking-tight mb-2">Restaurant Profile</h1>
-        <p className="text-body-lg font-body-lg text-on-surface-variant">Manage your establishment's details and contact info.</p>
+    <div className="max-w-4xl mx-auto space-y-6 md:space-y-8">
+      <div className="mb-6 md:mb-10 pb-4 md:pb-6 border-b border-surface-variant/30">
+        <h1 className="text-headline-sm md:text-headline-md font-headline-md text-on-surface tracking-tight mb-2">Restaurant Profile</h1>
+        <p className="text-body-md md:text-body-lg font-body-lg text-on-surface-variant">Manage your establishment's details and contact info.</p>
       </div>
 
       {error && (
@@ -110,15 +110,15 @@ const RestaurantProfile = () => {
         </div>
       )}
 
-      <div className="bg-surface-bright border border-surface-variant/40 rounded-[32px] p-8 md:p-12 ambient-warm-card relative overflow-hidden pearl-glass">
+      <div className="bg-surface-bright border border-surface-variant/40 rounded-[20px] md:rounded-[32px] p-6 md:p-12 ambient-warm-card relative overflow-hidden pearl-glass">
         {/* Subtle decorative elements inside card */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-secondary-fixed/5 rounded-full blur-[80px] pointer-events-none"></div>
         <svg className="absolute -top-10 -right-10 w-64 h-64 pointer-events-none opacity-20" xmlns="http://www.w3.org/2000/svg">
           <path d="M 10,100 C 50,20 150,0 200,80 C 250,160 100,200 50,150" fill="none" stroke="#dfb76c" strokeWidth="2" strokeDasharray="4,8"></path>
         </svg>
 
-        <div className="relative z-10 flex items-start gap-8 flex-col md:flex-row">
-          <div className="w-32 h-32 shrink-0 rounded-[24px] bg-surface-container border border-surface-variant/60 overflow-hidden shadow-inner group relative">
+        <div className="relative z-10 flex items-center md:items-start gap-6 md:gap-8 flex-col md:flex-row">
+          <div className="w-24 h-24 md:w-32 md:h-32 shrink-0 rounded-[20px] md:rounded-[24px] bg-surface-container border border-surface-variant/60 overflow-hidden shadow-inner group relative">
              <img 
                src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=300&h=300&fit=crop" 
                alt="Restaurant Logo" 
